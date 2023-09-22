@@ -11,7 +11,6 @@ export default class ImageApiService {
     this.per_page = 40;
   }
   async fetchFotos() {
-    // console.log(this);
     const params = new URLSearchParams({
       q: this.searchQuery,
       key: API_KEY,

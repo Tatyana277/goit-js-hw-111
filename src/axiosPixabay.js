@@ -1,4 +1,3 @@
-// === именованный экспорт функции которая делает запрос на бекенд и возвращает промис
 import axios from 'axios';
 const axios = require('axios');
 const API_KEY = '39605451-2a978709c93af824fe2a9e2e1';
@@ -11,7 +10,6 @@ export default class ImageApiService {
     this.per_page = 40;
   }
   async fetchFotos() {
-    // console.log(this);
     const params = new URLSearchParams({
       q: this.searchQuery,
       key: API_KEY,
@@ -22,9 +20,9 @@ export default class ImageApiService {
       page: this.page,
     });
     const url = `${BASE_URL}/?${params}`;
-    // console.log(url);
+
     this.icrementPage();
-    // console.log(axios.get(url, { params }));
+
     return await axios.get(url);
   }
   icrementPage() {

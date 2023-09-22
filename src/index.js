@@ -1,11 +1,9 @@
 // импортирую библиотеки нотифай, симпллайтбокс, аксиос
 import './sass/index.scss';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-//import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 // Дополнительный импорт стилей
 import 'simplelightbox/dist/simple-lightbox.min.css';
-//import { axiosPixabay } from './axiosPixabay';
 import ImageApiService from './axiosPixabay';
 
 // установила симпллайтбокс, нотифай и аксиос зарегестрировалась на  пиксабей
@@ -35,8 +33,17 @@ const imageApiService = new ImageApiService();
 function createImageEl(hits) {
   console.log(hits);
   const markup = hits
-    .map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => {
-      return `
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `
           <a href="${largeImageURL}" class="photo-card">
            <img src="${webformatURL}" alt="${tags}" loading = "lazy"  class="photo-image" />
            <div class="info" style= "display: flex">
@@ -54,7 +61,8 @@ function createImageEl(hits) {
               </p>
             </div>
              </a> `;
-    })
+      }
+    )
     .join('');
   refs.galleryEl.insertAdjacentHTML('beforeend', markup);
   // console.log(refs.galleryEl);
@@ -88,7 +96,9 @@ async function onSubmit(e) {
       // console.log('работает зен');
       clearImagesContainer();
       if (hits.length === 0) {
-        Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
       } else {
         Notify.success(`Hooray! We found ${totalHits} images.`);
         createImageEl(hits);
@@ -96,7 +106,9 @@ async function onSubmit(e) {
     }
   } catch (error) {
     // === цепляю метод для обработки ошибки(=======)
-    Notify.failure("We're sorry, but you've reached the end of search results.");
+    Notify.failure(
+      "We're sorry, but you've reached the end of search results."
+    );
     console.log(error.message);
   }
 }
@@ -110,7 +122,9 @@ async function onLoadMoreClick(e) {
     data: { hits },
   } = response;
   if (hits.length === 0) {
-    Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
     // refs.goUpBtn.style = ' display: none';
   } else createImageEl(hits);
 }
